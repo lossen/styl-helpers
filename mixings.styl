@@ -1,0 +1,57 @@
+mix-font(size = 16px, color = #fff, line = 1em, weight = normal, family = "Ubuntu", style = normal)
+  $size_em = size/16
+  font-size: $size_em em
+  font-family family
+  color color
+  line-height line
+  font-weight weight
+  font-style style
+
+ubuntu-regular(size = 16px, color = #fff, line = 1em)
+  mix-font(size, color, line, normal, "Ubuntu")
+
+form-default(input)
+  width 120px
+  border-radius 2px
+  height 29px
+  border none
+  padding-left 10px
+
+padding-y(top = 15px, bottom = 15px)
+  padding-top top 
+  padding-bottom bottom 
+
+pseudo($self= before, position = relative, types = top left, offsets = 0 0, content = '', inline = false)
+  &:{$self}
+    content content
+    position position
+
+    if inline
+      display inline-block
+    else
+      display block
+
+    if position == absolute
+      for $pos in 0..length(types) - 1
+        if length(offsets) > $pos {
+          {types[ $pos ]} offsets[$pos]
+        }
+    {block}
+
+pseudo-inline($self= before, position = relative, types = top left, offsets = 0 0, content = '')
+  +pseudo($self, position, types, offsets, content, true)
+    {block}
+
+before($position)
+  &:before
+    content: ''
+    position $position
+    z-index 1
+    {block}
+after($position)
+  &:after
+    content: ''
+    position $position
+    z-index 1
+    {block}
+
